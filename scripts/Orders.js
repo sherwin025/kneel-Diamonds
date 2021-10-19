@@ -1,8 +1,36 @@
-import { getOrders } from "./database.js"
+import { getOrders, getMetals, getSizes, getStyles } from "./database.js"
 
 const buildOrderListItem = (order) => {
+// get materials costs 
+    const metals = getMetals()
+    const foundMetal = metals.find(
+    (metal) => {
+        return metal.id === order.metalId
+    }
+)
+
+    const sizes = getSizes()
+    const foundSizes = sizes.find(
+        (size) => {
+            return size.id === order.sizeId
+        }
+)
+
+    const styles = getStyles()
+    const foundStyles = styles.find(
+        (style) => {
+            return style.id === order.styleId
+        }
+)
+
+const totalCost = foundMetal.price + foundSizes.price + foundStyles.price
+
+const costString = totalCost.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD"
+})
     return `<li>
-        Order #${order.id} was placed on ${order.timestamp}
+    Order #${order.id} cost ${costString}
     </li>`
 }
 
@@ -22,4 +50,6 @@ export const Orders = () => {
 
     return html
 }
+
+
 
