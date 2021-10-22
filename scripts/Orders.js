@@ -1,29 +1,37 @@
-import { getOrders, getMetals, getSizes, getStyles } from "./database.js"
+import { getOrders, getMetals, getSizes, getStyles, getType } from "./database.js"
 
 const buildOrderListItem = (order) => {
 // get materials costs 
     const metals = getMetals()
-    const foundMetal = metals.find(
+    let foundMetal = metals.find(
     (metal) => {
         return metal.id === order.metalId
     }
 )
 
     const sizes = getSizes()
-    const foundSizes = sizes.find(
+    let foundSizes = sizes.find(
         (size) => {
             return size.id === order.sizeId
         }
 )
 
     const styles = getStyles()
-    const foundStyles = styles.find(
+    let foundStyles = styles.find(
         (style) => {
             return style.id === order.styleId
         }
 )
 
-const totalCost = foundMetal.price + foundSizes.price + foundStyles.price
+    let totalCost = foundMetal.price + foundSizes.price + foundStyles.price
+    
+    const types = getType()
+    let foundType = types.find(
+        (type) => {
+            return type.id === order.typeId
+        }
+    )
+    totalCost = totalCost * foundType.pX
 
 const costString = totalCost.toLocaleString("en-US", {
     style: "currency",

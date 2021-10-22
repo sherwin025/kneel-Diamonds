@@ -31,10 +31,17 @@ const database = {
             metalId: 3,
             sizeId: 2,
             styleId: 3,
+            typeId: 2,
             timestamp: 1614659931693
         }
     ],
-    orderBuilder: {}
+    orderBuilder: {},
+    types: [
+        {id: 1, type: "Ring", pX: 1},
+        {id: 2, type: "Earring", pX: 2},
+        {id: 3, type: "Necklace", pX: 4},
+
+    ]
 }
 
 export const getMetals = () => {
@@ -53,17 +60,29 @@ export const getOrders = () => {
     return database.customOrders.map(order => ({...order}))
 }
 
+export const getType = () => {
+    return database.types.map(type => ({...type}))
+}
+
 //state 
 export const setMetal = (id) => {
     database.orderBuilder.metalId = id
+    document.dispatchEvent(new CustomEvent("stateChanged"))
 }
 
 export const setSize = (id) => {
     database.orderBuilder.sizeId = id
+    document.dispatchEvent(new CustomEvent("stateChanged"))
 }
 
 export const setStyle = (id) => {
     database.orderBuilder.styleId = id
+    document.dispatchEvent(new CustomEvent("stateChanged"))
+}
+
+export const setType = (id) => {
+    database.orderBuilder.typeId = id
+    document.dispatchEvent(new CustomEvent("stateChanged"))
 }
 
 //add custom order to state 
