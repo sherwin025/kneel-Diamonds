@@ -1,4 +1,4 @@
-import { getSizes, setSize } from "./database.js"
+import { getSizes, setSize } from "./dataaccess.js"
 
 const sizes = getSizes()
 let targetValue = 0
